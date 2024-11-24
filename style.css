@@ -1,0 +1,85 @@
+
+*{
+    margin: 0px;
+    padding: 0px;
+  }
+ 
+ body{
+    background-color: rgb(240, 174, 66);
+    text-align: center;
+ }
+ .container{
+    height: 70vb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+ 
+ .game{
+    height: 55vmin;
+    width: 55vmin;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+ }
+     
+ .box{
+    height: 16vmin;
+    width: 16vmin;
+    border-radius: 9px;
+    box-shadow: 7px 7px 7px rgb(0, 0, 0, 0.4);
+    border-color: rgb(253, 149, 21);
+    font-size: 45px;
+    background-color: rgb(197, 238, 232);
+    color: black ;
+  }
+ 
+  #reset-btn{
+    background-color: rgb(88, 239, 189);
+    font-size: 15px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: 7px;
+    padding-top: 7px;
+    border-radius: 8px;
+    border-color: rgb(63, 238, 180);
+    box-shadow: 0 0 10px rgb(0, 0, 0, 0.4);
+    
+  }
+ 
+  #new-btn{
+    background-color: rgb(88, 239, 189);
+    font-size: 15px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: 6px;
+    padding-top: 3px;
+    border-radius: 8px;
+    border-color: rgb(63, 238, 180);
+    box-shadow: 0 0 10px rgb(0, 0, 0, 0.4); 
+  }
+ 
+  #msg{
+    color: black;
+    font-size: 29px;
+  }
+  .msg-container{
+    height:16vmin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 30px;
+   }
+ 
+ .hide{
+   display: none;
+ }
+
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
