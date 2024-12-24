@@ -1,11 +1,10 @@
-
 let boxes = document.querySelectorAll(".box");
 let resetBtn = document.querySelector("#reset-btn");
-let newGameBtn = document.querySelector("#new-btn");
 let msgContainer = document.querySelector(".msg-container");
 let msg = document.querySelector("#msg");
 let turnO = true;
 let count = 0;
+let inputOrder = []; 
 
 const winPattern = [
     [0, 1, 2],
@@ -18,70 +17,100 @@ const winPattern = [
     [6, 7, 8],
 ];
 
+// Reset game function
 const resetGame = () => {
     turnO = true;
     count = 0;
+    inputOrder = []; // Reset the input order
     enableBoxes();
     msgContainer.classList.add("hide");
 };
 
-
-boxes.forEach((box) => {
+// Handle player moves
+boxes.forEach((box, index) => {
     box.addEventListener("click", () => {
-        // console.log("box was clicked");
+        if (box.innerText !== "") return; // Prevent overwriting a filled box
+
+        // Place O or X in the clicked box
+        
         if (turnO) {
             box.innerText = "O";
-            turnO = false;
+            box.style.color = "#0085F0"; // Set text color to blue for O
         } else {
             box.innerText = "X";
-            turnO = true;
+            box.style.color = "red"; // Set text color to red for X
         }
+
+        turnO = !turnO; // Alternate turns
         box.disabled = true;
+        inputOrder.push(index); // Track the move order
         count++;
 
-        let isWinner = checkWinner();
+        // Check for a winner before removing any symbol
+        if (checkWinner()) {
+            return; // Stop further execution if there's a winner
+        }
 
-        if (count === 9 && !isWinner) {
+        // Remove the first element when the seventh move is entered
+        if (count > 6) {
+            const oldestIndex = inputOrder.shift(); // Get and remove the oldest move
+            boxes[oldestIndex].innerText = ""; // Clear the box
+            boxes[oldestIndex].disabled = false; // Re-enable the box
+            count--; // Adjust count
+        }
+
+        // Check for a winner again after potential removal
+        if (checkWinner()) {
+            return;
+        }
+
+        // If the game is a draw, show the draw message
+        if (count === 9) {
             showDraw();
         }
     });
 });
 
+// Disable all boxes (when the game ends)
 const disableBox = () => {
     for (let box of boxes) {
         box.disabled = true;
     }
 };
+
+// Enable all boxes (resetting the game)
 const enableBoxes = () => {
     for (let box of boxes) {
         box.disabled = false;
         box.innerText = "";
+
     }
 };
+
+// Show winner message
 const showWinner = (winner) => {
     msg.innerText = `Winner is ${winner}`;
-    msgContainer.classList.remove("hide");
-    disableBox();
+    msgContainer.classList.remove("hide"); // Make the message container visible
+    disableBox(); // Disable all boxes to prevent further moves
 };
-const showDraw = ()=>{
-    msg.innerText = `Match Draw`;
-    msgContainer.classList.remove("hide");
-    disableBox();
-};
+
+
+// Check for winner based on the predefined winning patterns
 const checkWinner = () => {
     for (let pattern of winPattern) {
         let pos1val = boxes[pattern[0]].innerText;
         let pos2val = boxes[pattern[1]].innerText;
         let pos3val = boxes[pattern[2]].innerText;
 
-        if (pos1val != "" && pos2val != "" && pos3val != "") {
+        if (pos1val !== "" && pos2val !== "" && pos3val !== "") {
             if (pos1val === pos2val && pos2val === pos3val) {
-                showWinner(pos1val);
+                showWinner(pos1val); // Declare the winner
                 return true;
             }
         }
     }
+    return false;
 };
 
-newGameBtn.addEventListener("click", resetGame);
+// Reset button event listener
 resetBtn.addEventListener("click", resetGame);
