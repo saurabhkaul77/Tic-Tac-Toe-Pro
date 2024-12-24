@@ -64,10 +64,7 @@ boxes.forEach((box, index) => {
             return;
         }
 
-        // If the game is a draw, show the draw message
-        if (count === 9) {
-            showDraw();
-        }
+
     });
 });
 
